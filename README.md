@@ -1,52 +1,78 @@
-# Tmux Sidelib
+# Tmux Sidenote
 
+Tmux-sidenote is a plugin for tmux which, when the user hits `Prefix + N`, will create a new pane and open a relevant note using vim in the pane.
 
-## Description
+It's built using [tmux sidelib](https://www.github.com/alexsaalberg/tmux-sidelib), a shell script library which can be used to easily create plugins in the same ilk.
 
-Tmux Sidelib is a bash script library meant to reduce the redundant work required to create tmux-plugins such as [tmux-sidelib](https://github.com/tmux-plugins/tmux-sidebar) or [tmux-notepane](https://github.com/alexsaalberg/tmux-notepane). These are plugins which open a useful program when activated via a tmux binding.
+### Example
+
+If you are editing something in vim, and then hit `Prefix + N`, a new pane will open and then the command `vim ~/.note/vim.note` will be run in it.
+
+The tmux session will then look like this.
+
+![Example use screenshot](screen.png)
 
 ## How to use
 
-#### Use an example sideapp
+1. Hit the key binding (`Prefix + N`) to open up a note pane in a new pane next to the current one.
 
-1. Clone the repo
+2. When you hit the key binding (`Prefix + N`) again, one of two things could happen.
 
-2. Copy a demo `sideapp.sh` program from [/demos](/demos) into [/scripts](/scripts).
+   - If you're in the same program, the note will be saved and the sidepane will be closed.
+   
+   - If you're in a different program, the note will be saved and a new note will be opened.
+   
+## How to install
 
-       cp /demos/note/sideapp.sh /scripts
+### Installation with [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) (recommended)
 
-3. Enter tmux if you are not already
+Add plugin to the list of TPM plugins in `.tmux.conf`:
 
-       tmux
+    set -g @plugin 'alexsaalberg/tmux-sidenote'
 
-4. Run `tmux_sidelib.tmux` (it's a shell script)
+Hit `prefix + I` to fetch the plugin and source it. You should now be able to
+use the plugin.
 
-       ./tmux_sidelib.tmux
-    
-4. Hit P-N (Prefix + N)
+### Manual Installation
 
-#### Create your own sideapp
+Clone the repo:
 
-- [Sidelib Tutorial](/docs/sidelib_tutorial.md)
+    $ git clone https://github.com/alexsaalberg/tmux-sidenote ~/clone/path
 
-- [`helpers.sh` documentation](/docs/helpers_sh.md)
+Add this line to the bottom of `.tmux.conf`:
 
-## Examples of "sideapps"
+    run-shell ~/clone/path/tmux_sidelib.tmux
 
-- [tmux-sideman](https://www.github.com/alexsaalberg/tmux-sideman)
+Reload TMUX environment:
 
-## Updates
+    # type this in terminal
+    $ tmux source-file ~/.tmux.conf
 
-- [changelog](/docs/changelog.md) 
-
-- [planned](/docs/planned.md)
+You should now be able to use the plugin.
 
 ## Requirements
 
 - `tmux 1.8` or higher
 
+## Changes
+
+**v1.0**
+
+- Initial release.
+
+- Built on [tmux-sidelib](https://www.github.com/alexsaalberg/tmux-sidelib) version v0.2
+
+- Timeout functionality currently disabled.
+
 ## Other Stuff
 
-- [bash notes](/docs/bash_notes.md)
+- [tmux-sidelib](https://www.github.com/alexsaalberg/tmux-sidelib)
 
-- [tmux-sidebar](tmux-plugins/tmux-sidebar)
+- [tmux plugin manager](https://github.com/tmux-plugins/tpm)
+
+- [tmux-sidebar](https://www.github.com/tmux-plugins/tmux-sidebar) 
+    - Inspiration for tmux-notepane, tmux-sidelib, etc.
+    
+- [tmux-notepane](https://www.github.com/tmux-plugins/tmux-notepane) 
+  - Similar thing, but built using python and [libtmux](https://github.com/tmux-python/libtmux)
+
